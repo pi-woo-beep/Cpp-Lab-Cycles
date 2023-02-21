@@ -1,121 +1,99 @@
 // progtram to perform operations such as compare, concatenate and length on String objects..
 
-#include <iostream>
+#include<iostream>
+#include<cstring>
 using namespace std;
 
-void comp(string s1,string s2){
-	int x=s1.compare(s2);
-	if (x!=0){
-		cout<<"Both the strings are not the same :(";
-	}
-	else if (x==0){
-		cout<<"Both the strings are the same :)";
-	}
-}
-
-string concatenate(string s1,string s2){
-	string result;
-	result=s1+s2;
-	cout<<"The resultant string is: "<<result;
-}
-
-void length(string s){
-	cout<<"The length of "<<s<<" is: "<<s.length();
-}
-
-int main(){
-	int ch;
-	string s, s1, s2;
-	
-	while (ch!=5){
-		cout<<"\n\n1. Compare 2 strings. \n2. Concatenate 2 strings. \n3. Check the length of a string. \n4. Exit."<<endl;
-		
-		cout<<"\nEnter choice: ";
-		cin>>ch;
-		
-		switch (ch){
-			case 1:{
-				cout<<"Enter string 1: ";
-				cin>>s1;
-				cout<<"Enter string 2: ";
-				cin>>s2;
-				comp(s1,s2);
-				break;
-			}
-			case 2:{
-				cout<<"Enter string 1: ";
-				cin>>s1;
-				cout<<"Enter string 2: ";
-				cin>>s2;
-				concatenate(s1,s2);
-				break;
-			}
-			case 3:{
-				cout<<"Enter string: ";
-				cin>>s;
-				length(s);
-				break;
-			}
-			case 4:{
-				cout<<"Thank you for using the program :)"<<endl;
-				exit (0);
-				break;
-			}
-		}
-	}
-	return(0);
-}
-
-
-/*
-#include <iostream>
-using namespace std;
-
-class STRING{
+class strings
+{
     private:
-        string s,s1,s2;
+    char *strs;
+    int length;
+
     public:
-        void comp();
-        void concatenate();
-        void len();
+    strings()
+    {
+        length=0;
+        strs=new char[length+1];
+    }
+
+    strings(const char *s)
+    {
+        length=strlen(s);
+        strs=new char[length+1];
+        strcpy(strs, s);
+    }
+
+    void display(void)
+    {
+        cout<<strs;
+    }
+
+    int getlength(void)
+    {
+        return length;
+    }
+
+    void concatenate(strings, strings);
+
 };
 
-void STRING::comp(){
-    cout<<"Enter string 1: ";
-    cin>>s1;
-    cout<<"Enter string 2: ";
-    cin>>s2;
-    int x=s1.compare(s2);
-    if (x==0){
-        cout<<"Both strings are the same :)";
-    }
-    else{
-        cout<<"Both strings are not the same :(";
-    }
+void strings::concatenate(strings a, strings b)
+{
+    length=a.length+b.length;
+    delete strs;
+
+    strs=new char[length+1];
+    strcpy(strs, a.strs);
+    strcat(strs, b.strs);
 }
 
-void STRING::concatenate(){
-    cout<<"Enter string 1: ";
-    cin>>s1;
-    cout<<"Enter string 2: ";
-    cin>>s2;
-    cout<<"The resultant string is: "<<s1+s2;
-}
 
-void STRING::len(){
-    cout<<"Enter string: ";
-    cin>>s;
-    cout<<"Length of string: "<<s.length();
-}
 
-int main(){
-    int ch;
+int main()
+{
+    int str1len, str2len;
+    strings S1;
+
+    strings n1("Greeshma");
+    cout<<"The first string is ";
+    n1.display();
+    cout<<"\n";
+    str1len=n1.getlength();
+    cout<<"The length is "<<str1len<<"\n";
     
-    while (ch!=5){
-        cout<<"\n1. Compare 2 strings. \n2. Concatenate 2 strings. \n3. Check the length of a given string. \n4. Exit."<<endl;
-        switch (ch){
-            case 1:{
-        }
+
+    strings n2("Gouri");
+    cout<<"The second string is ";
+    n2.display();
+    cout<<"\n";
+    str2len=n2.getlength();
+    cout<<"The length is "<<str2len<<"\n";
+    
+    cout<<"*********COMPARISON**********"<<"\n";
+    if(str1len>str2len)
+    {
+        cout<<"The larger string is ";
+        n1.display();
+        cout<<"\n";
+        cout<<"The smaller string is ";
+        n2.display();
+        cout<<"\n";
     }
+
+    else if(str2len>str1len) 
+    {
+        cout<<"The larger string is ";
+        n2.display();
+        cout<<"\n";
+        cout<<"The smaller string is ";
+        n1.display();
+        cout<<"\n";
+    }
+    
+    cout<<"********CONCATENATION********"<<"\n";
+    S1.concatenate(n1, n2);
+    cout<<"The concatenated string is= ";
+    S1.display();
+    cout<<"\n";
 }
-*/
