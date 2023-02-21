@@ -55,7 +55,7 @@ int main()
     int str1len, str2len;
     strings S1;
 
-    strings n1("Greeshma");
+    strings n1("aaa");
     cout<<"The first string is ";
     n1.display();
     cout<<"\n";
@@ -63,37 +63,37 @@ int main()
     cout<<"The length is "<<str1len<<"\n";
     
 
-    strings n2("Gouri");
+    strings n2("bbb");
     cout<<"The second string is ";
     n2.display();
     cout<<"\n";
     str2len=n2.getlength();
     cout<<"The length is "<<str2len<<"\n";
     
-    cout<<"*********COMPARISON**********"<<"\n";
+    cout<<"Comparison"<<"\n";
     if(str1len>str2len)
     {
-        cout<<"The larger string is ";
+        cout<<"The larger string is: ";
         n1.display();
         cout<<"\n";
-        cout<<"The smaller string is ";
+        cout<<"The smaller string is: ";
         n2.display();
         cout<<"\n";
     }
 
     else if(str2len>str1len) 
     {
-        cout<<"The larger string is ";
+        cout<<"The larger string is: ";
         n2.display();
         cout<<"\n";
-        cout<<"The smaller string is ";
+        cout<<"The smaller string is: ";
         n1.display();
         cout<<"\n";
     }
     
-    cout<<"********CONCATENATION********"<<"\n";
+    cout<<"Concatenation"<<"\n";
     S1.concatenate(n1, n2);
-    cout<<"The concatenated string is= ";
+    cout<<"The concatenated string is: ";
     S1.display();
     cout<<"\n";
 }
