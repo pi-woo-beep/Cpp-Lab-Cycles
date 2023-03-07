@@ -1,4 +1,5 @@
-
+/*addition of 2 complex numbers using constructor overloading. first constructor (no args) used to create objects which are not initialised,
+second (one arg) used to initialize real and imaginary parts to equal values, third (2 args) to initialize real and imaginary parts to 2 dif values.*/
 
 #include<iostream>
 using namespace std;
