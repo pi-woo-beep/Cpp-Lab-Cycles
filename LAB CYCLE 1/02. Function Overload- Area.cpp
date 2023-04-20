@@ -22,8 +22,8 @@ float area(float radius,float height){       //cylinder
 }
 
 int main(){
-	float rad,breadth,height,a,b,c,side,length,radius;
-	int ch;
+	float rad, height,a,b,c, radius;
+	int side, breadth, length, ch;
 	
 	
 	
