@@ -33,7 +33,7 @@ int main(){
     cout<<"Addition of Complex Numbers\n\n\n";
 
     int real,imag;
-
+    
     cout<<"Enter a value for real and imaginary parts of complex number: ";
     cin>>real;
     comp a(real);
@@ -49,7 +49,7 @@ int main(){
     cout<<"\n\n\n";
 
     comp c;
-    cout<<"Third complex number is: ";
+    cout<<"Complex number with no inputs: \nThird complex number is: ";
     c.display();
     cout<<"\n\n\n";
     cout<<"The resultant complex number of the given 2 complex numbers is: ";
