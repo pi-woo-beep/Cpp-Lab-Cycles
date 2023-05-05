@@ -1,132 +1,117 @@
 /*matrix class which can handle integer matrices of different dimensions. Also overload the operator for addition and
 multiplication of matrices. Use double pointers in your program to dynamically allocate memory for the matrices.*/
 
-#include <iostream>
+#include<iostream>
 using namespace std;
-
-class matrix{
-	private:
-		int r, c, **p;
-	public:
-		matrix(){
-		}
-		matrix (int r, int c){
-			p = new int *[r];
-			for (int i=0; i<r; i++){
-				p[i] = new int [c];
-			}
-		}
-		void input(){
-			int value;
-			cout<<"\nEnter number of rows and columns of matrix: "<<endl;
-			cin>>r>>c;
-			matrix a(r,c);
-			cout<<"Enter elements row by row: ";
-			for (int i=0; i<r; i++){
-				for (int j=0; j<c; j++){
-					cin>>value;
-					a.p[i][j]=value;
-				}
-			}
-		}
-		void output(){
-			for (int i=0; i<r; i++){
-				cout <<" ";
-				for (int j=0; j<c; j++){
-					cout<<p[i][j]<<"\t";
-				}
-				cout<<"\n";
-			}
-		}
-		
-		void operator + (const matrix &a){
-			if ( r==a.r && c==a.c ){
-				matrix b(r,c);
-				for (int i=0; i<r; i++){
-					for (int j=0; j<c; j++){
-						b.p[i][j] = p[i][j] + a.p[i][j];
-					}
-				}
-				b.output();
-			}else{
-			cout<<"Matrices have to be of the same dimensions..";
-			}
-		}
-		
-		void operator * (const matrix &a){
-			if (c==a.r){
-				matrix b(r,a.c);
-				for (int i=0; i<r; i++){
-					for (int j=0; j<a.c; j++){
-						b.p[i][j] = 0;
-						for  (int k=0; k<c; k++){
-							b.p[i][j] += p[i][j] * a.p[i][j];
-						}
-					}
-				}
-				b.output();
-			}
-			else{
-				cout<<"The column of the first matrix must be the same as the row of the seocnd matrix..";
-			}
-		}
+class matrix {
+  float ** m;
+  int row, col;
+  public:
+    matrix() {}
+  matrix(int r, int c);
+  void input();
+  void display();
+  matrix operator + (matrix M);
+  matrix operator * (matrix M);
 };
 
-int main(){
-	int r,c,ch;
-	bool assigned = false;
-	matrix m1, m2;
-	
-	while (ch!=6){
-		cout<<"\n\n1. Enter elements of 2 matrices \n2. Display matrices \n3. Add matrices \n4. Multiply matrices \n5. Exit\n\n";
-		cout<<"Enter choice: ";
-		cin>>ch;
-		
-		switch (ch){
-			case 1:{
-				cout<<"\nMatrix 1: \n";
-				m1.input();
-				cout<<"\nMatrix 2: \n";
-				m2.input();
-				assigned = true;
-				break;
-			}
-			case 2:{
-				if (assigned){
-					cout<<"\nMatrix 1: \n";
-					m1.output();
-					cout<<"\nMatrix 2: \n";
-					m2.output();
-				}
-				else{
-					cout<<"\nPlease enter matrices (Choice 1).."<<endl;
-				}
-				break;
-			}
-			case 3:{
-				if (assigned){
-					cout<<"Resultant matrix of addition is: \n"; m1 + m2;
-				}
-				else{
-					cout<<"\nPlease enter matrices (Choice 1).."<<endl;
-				}
-				break;
-			}
-			case 4:{
-				if (assigned){
-					cout<<"REsultant matrix of multiplication is: \n"; m1 * m2;
-				}
-				else{
-					cout<<"\nPlease enter matrices (Choice 1).."<<endl;
-				}
-				break;
-			}
-			case 5:{
-				cout<<"Thank you for using the program :)";
-				exit (0);
-				break;
-			}
-		}
-	}
-	return 0;
+matrix::matrix(int r, int c) {
+  row = r;
+  col = c;
+  m = new float * [r];
+  for (int i = 0; i < r; i++)
+    m[i] = new float[col];
+}
+void matrix::input() {
+  cout << "Enter matrix elements \n";
+  for (int i = 0; i < row; i++) {
+    for (int j = 0; j < col; j++) {
+      int value;
+      cin >> value;
+      m[i][j] = value;
+    }
+  }
+}
+
+void matrix::display() {
+  for (int i = 0; i < row; i++) {
+    for (int j = 0; j < col; j++) {
+      cout << m[i][j] << " ";
+    }
+    cout << "\n";
+  }
+}
+
+matrix matrix::operator + (matrix M) {
+
+  matrix mt(row, col);
+  for (int i = 0; i < row; i++) {
+    for (int j = 0; j < col; j++) {
+      mt.m[i][j] = m[i][j] + M.m[i][j];
+    }
+  }
+  return mt;
+}
+
+matrix matrix::operator * (matrix M) {
+  matrix mt(row, M.col);
+
+  for (int i = 0; i < row; i++) {
+    for (int j = 0; j < M.col; j++) {
+      mt.m[i][j] = 0;
+      for (int k = 0; k < M.row; k++)
+        mt.m[i][j] += m[i][k] * M.m[k][j];
+    }
+  }
+
+  return mt;
+}
+int main() {
+
+  int r1, c1, r2, c2, ch;
+  cout << " Enter size of the first matrix (m x n) : ";
+  cin >> r1 >> c1;
+  matrix m1(r1, c1);
+  m1.input();
+  cout << " Enter size of the second matrix (m x n) : ";
+  cin >> r2 >> c2;
+  matrix m2(r2, c2);
+  m2.input();
+  cout << endl << endl;
+  while (ch!=4) {
+      cout << "1. Matrix addition \n2. Matrix multiplication \n3. Exit \n";
+      cin >> ch;
+        switch (ch) {
+            case 1:{
+                if (r1 == r2 && c1 == c2) {
+                matrix m3(r1, c1);
+
+                m3 = m1 + m2;
+                cout << "Resultant Matrix after addition is:\n";
+                m3.display();
+                }
+                else
+                    cout << "Matrices should be of the same size for addition!" << endl;
+            break;
+            }
+            case 2:{
+                if (c1 == r2) {
+                matrix m5(r2, c1);
+
+                m5 = m1 * m2;
+                cout << "Resultant Matrix after multiplication is:\n";
+                m5.display();
+            }
+            else
+                cout << " Column of first matrix must be equal to the row of second matrix " << endl;
+                break;
+            }
+            case 3:{
+                cout<<"Thank you";
+                exit (0);
+                break;
+            }
+        }
+    }
+    return 0;
 }
