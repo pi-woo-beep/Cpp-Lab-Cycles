@@ -31,18 +31,19 @@ class store{
            		cin>>price[count];
             	cout<<"\nEnter quantity: ";
            		cin>>quantity[count];
-            	cout<<"\nItem added to the list :)"<<endl;
+            	cout<<"\nItem added to the list"<<endl;
             	count++;
             }
         }
 
         void delete_item(){
-            int c;                                              //item code
+            int c;                                              
             cout<<"\nEnter item code: ";
             cin>>c;
             for (int i=0; i<count; i++){
                 if (code[i] == c){
                     quantity[i]=0;
+                    cout<<"Item deleted from list.";
                 }
             }
         }
@@ -50,7 +51,7 @@ class store{
             cout<<"\n\n\n"<<"Code\t Name\t Price\t Quantity\t Cost\n\n"<<endl;
             for (int i=0; i<count; i++){
                 if(quantity[i]!=0)
-                    cout<<code[i]<<"\t"<<name[i]<<"\t"<<price[i]<<"\t\t"<<quantity[i]<<"\t"<<price[i]*quantity[i]<<endl;
+                    cout<<code[i]<<"\t\t"<<name[i]<<"\t"<<price[i]<<"\t\t\t"<<quantity[i]<<"\t\t\t"<<price[i]*quantity[i]<<endl;
             }
             float cost=0;
             for (int i=0; i<count; i++){
@@ -84,7 +85,7 @@ int main(){
                 break;
             }
             case 4:{
-                cout<<"Thank you :)";
+                cout<<"Thank you";
                 exit (0);
             }
         }
