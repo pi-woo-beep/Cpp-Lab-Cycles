@@ -4,203 +4,146 @@ as matrix_add, matrix_mult, matrix_transpose and matrix_trace..*/
 #include<iostream>
 using namespace std;
 
-class matrix{
-	private:
-		int **p;
-		int x,y;
-	public:
-		matrix(int x, int y){
-			p=new int *[x];
-			for (int i=0; i<x; i++){
-				p[i]=new int [y];
-			}
-		}
-		~matrix(){
-			for (int i=0; i<x; i++){
-				delete p[i];
-			}
-			delete p;
-			cout<<"Memory has been deleted..";
-		}
-		
-		void input(int i, int j, int value){
-			p[i][j]=value;
-		}
-		
-		int output(int i, int j){
-			return p[i][j];
-		}
-		
-		void matrix_add(matrix, matrix);
-		
-		void matrix_mult(matrix, matrix);
-		
-		void matrix_transpose();
-		
-		void matrix_trace();
+class Mat {
+  private: int ** a;
+  int r,
+  c;
+  public: Mat() {}
+  Mat(int x, int y) {
+    r = x;
+    c = y;
+    if ((r > 0) && (c > 0)) {
+      a = new int * [r];
+      for (int i = 0; i < r; i++) {
+        a[i] = new int[c];
+      }
+    }
+  }
+  ~Mat() {
+    for (int i = 0; i < r; i++)
+      delete a[i];
+    delete a;
+  }
+  void matrix_add(Mat & x, Mat & y);
+  void matrix_transpose(Mat & x);
+  void matrix_mult(Mat & x, Mat & y);
+  void input(void);
+  int matrix_trace(void);
+  void display();
 };
-
-void matrix::matrix_add(matrix a, matrix b){
-	matrix result(x,y);
-	for (int i=0; i<x; i++){
-		for (int j=0; j<y; j++){
-			result[i][j]=a[i][j]+b[i][j];
-		}
-	}
-	cout<<"The resultant matrix is: "<<endl;
-	for (int i=0; i<x; i++){
-		for (int j=0; j<y; j++){
-			cout<<result.output(i,j)<<" ";
-		}
-		cout<<"\n";
-	}
+void Mat::matrix_add(Mat & x, Mat & y) {
+  for (int i = 0; i < r; i++) {
+    for (int j = 0; j < c; j++) {
+      a[i][j] += x.a[i][j] + y.a[i][j];
+    }
+  }
 }
-
-void matrix::matrix_mult(matrix one, matrix two){
-	int r1,r2,c1,c2;
-	matrix result(r1,c2);
-	for (int i=0; i<r1; i++){
-		for (int j=0; j<c2; j++){
-			result[i][j]=0;
-			for (int k=0; k<c1; k++){
-				result[i][j] += one[i][k] * two[k][j];
-			}
-		}
-	}
-	cout<<"The resultant matrix is: "<<endl;
-	for (int i=0; i<x; i++){
-		for (int j=0; j<y; j++){
-			cout<<result.output(i,j)<<" ";
-		}
-		cout<<"\n";
-	}
+void Mat::matrix_transpose(Mat & x) {
+  for (int i = 0; i < r; i++) {
+    for (int j = 0; j < c; j++) {
+      a[i][j] = x.a[j][i];
+    }
+    cout << endl;
+  }
+  display();
 }
-
-void matrix::matrix_transpose(){
-	matrix a(x,y);
-	for (int i=0; i<x; i++){
-		for (int j=0; j<y; j++){
-			a[i][j]=a[j][i];
-		}
-	}
-	cout<<"The transpose matrix is: "<<endl;
-	for (int i=0; i<x; i++){
-		for (int j=0; j<y; j++){
-			cout<<result.output(i,j)<<" ";
-		}
-		cout<<"\n";
-	}
+void Mat::matrix_mult(Mat & x, Mat & y) {
+  for (int i = 0; i < x.r; i++) {
+    for (int j = 0; j < y.r; j++) {
+      a[i][j] = 0;
+      for (int k = 0; k < x.c; k++) {
+        a[i][j] += x.a[i][k] * y.a[k][j];
+      }
+    }
+  }
 }
-
-void matrix::matrix_trace(){
-	int sum=0;
-	int n;
-	matrix d(n,n);
-	
-	for (int i=0; i<n; i++){
-		sum += d[i][i];
-	}
-	cout<<"Trace of the matrix is: "<<sum<<endl;
+int Mat::matrix_trace(void) {
+  int sum = 0;
+  for (int i = 0; i < r; i++) {
+    sum = sum + a[i][i];
+  }
+  return sum;
 }
-
-int main(){
-	int ch,m,n,value,r1,r2,c1,c2,x,y;
-	
-	cout<<"1. Add 2 matrices. \n2. Multiply 2 matrices. \n3. Transpose of a matrix. \n4. Trace of a matrix."<<endl;
-	
-	while (ch!=6){
-		switch (ch){
-			case 1:{
-				cout<<"Enter the size of the square matrix (n): "<<endl;
-				cin>>n;
-				x=n;
-				y=n;
-				matrix result(x,y);
-				matrix a(x,y);
-				cout<<"Enter elements of the first matrix row by row: "<<endl;
-				for (int i=0; i<x; i++){
-					for (int j=0; j<y; j++){
-						cin>>value;
-						a.input(i,j,value);
-					}
-				}
-				matrix b(x,y);
-				cout<<"Enter elements of the second matrix row by row: "<<endl;
-				for (int i=0; i<x; i++){
-					for (int j=0; j<y; j++){
-						cin>>value;
-						b.input(i,j,value);
-					}
-				}
-				result.matrix_add(a,b);
-				break;
-			}
-			case 2:{
-				cout<<"Enter size of first matrix (m x n): "<<endl;
-				cin>>r1>>c1;
-				matrix a(r1,c1);
-				cout<<"Enter size of second matrix (previous columns must be same as rows here): "<<endl;
-				cin>>r2>>c2;
-				matrix b(r2,c2);
-				while (c1!=r2){
-					cout<<"Error..! Columns of first matrix is not equal to rows of second matrix."<<endl;
-					cout<<"Enter size of first matrix (m x n): "<<endl;
-					cin>>r1>>c1;
-					cout<<"Enter size of second matrix (previous columns must be same as rows here): "<<endl;
-					cin>>r2>>c2;
-				}
-				matrix result(r1,c2);
-				cout<<"Enter elements of the first matrix row by row: "<<endl;
-				for (int i=0; i<r1; i++){
-					for (int j=0; j<c1; j++){
-						cin>>value;
-						a.input(i,j,value);
-					}
-				}
-				cout<<"Enter elements of the second matrix row by row: "<<endl;
-				for (int i=0; i<r2; i++){
-					for (int j=0; j<c2; j++){
-						cin>>value;
-						b.input(i,j,value);
-					}
-				}
-				result.matrix_mult(a,b);
-				break;
-			}
-			case 3:{
-			    cout<<"Enter the size of the matrix (m x n): "<<endl;
-			    cin>>m>>n;
-			    matrix a(m,n);
-			    cout<<"Enter the elements row by row: "<<endl;
-			    for (int i=0; i<m; i++){
-			    	for (int j=0; j<n; j++){
-			    		cin>>value;
-			    		a.input(i,j,value);
-					}
-				}
-				a.matrix_transpose();
-				break;
-			}
-			case 4:{
-				cout<<"Enter the size of the square matrix (n): "<<endl;
-				cin>>n;
-				matrix d(n,n);
-				cout<<"Enter the elements of the matrix row by row: "<<endl;
-				for (int i=0; i<n; i++){
-					for (int j=0; j<n; j++){
-						cin>>value;
-						d.input(i,j,value);
-					}
-				}
-				d.matrix_trace();
-				break;
-			}
-			case 5:{
-				cout<<"Exiting~ "<<endl;
-				exit(0);
-				break;
-			}
-		}
-	}
-	return (0);
+void Mat::input() {
+  for (int i = 0; i < r; i++) {
+    cout << "Enter " << c << " elements of " << i + 1 << " row : ";
+    for (int j = 0; j < c; j++) {
+      cin >> a[i][j];
+    }
+  }
+}
+void Mat::display() {
+  for (int i = 0; i < r; i++) {
+    for (int j = 0; j < c; j++) {
+      cout << a[i][j] << " ";
+    }
+    cout << endl;
+  }
+}
+int main() {
+  int r1, c1, r2, c2;
+  int ch;
+  cout << "Enter the number of rows and columns of the first matrix : ";
+  cin >> r1 >> c1;
+  Mat ob1(r1, c1);
+  cout << "Enter the values of the first matrix: " << endl;
+  ob1.input();
+  cout << "Enter the number of rows and colums of the second matrix : ";
+  cin >> r2 >> c2;
+  Mat ob2(r2, c2);
+  cout << "Enter the values of the second matrix: " << endl;
+  ob2.input();
+  while (ch!=6) {
+    cout << "\n1. Add the two matrices\n2.Find the product of the two matrices\n3. Find the transpose of the two matrices\n4. Find the trace of the two matrices\n5. Exit.\n";
+    cout<<"Enter choice: ";
+    cin >> ch;
+    switch (ch) {
+        case 1: {
+            if (r1 != r2 || c1 != c2) {
+            cout << "Matrices must have the same number of rows and columns." << endl;
+            }
+            else {
+                cout << "\nThe sum of the two matrices is: " << endl;
+                Mat ob3(r1, c1);
+                ob3.matrix_add(ob1, ob2);
+                ob3.display();
+            }
+            break;
+        }
+        case 2: {
+            if (c1 == r2) {
+            Mat ob4(r1, c2);
+            ob4.matrix_mult(ob1, ob2);
+            cout << "\nThe Product of the two matrices is : " << endl;
+            ob4.display();
+            }
+            else {
+                cout << "Multiplication not possible because order is not matching." << endl;
+            }
+            break;
+        }
+        case 3: {
+            cout << "The Transpose of the First Matrix : ";
+            Mat obj1(c1, r1);
+            obj1.matrix_transpose(ob1);
+            cout << "\nThe Transpose of the Second Matrix : ";
+            Mat obj2(c2, r2);
+            obj2.matrix_transpose(ob2);
+            break;
+        }
+        case 4: {
+            int trace1 = ob1.matrix_trace();
+            cout << "The Trace of the First Matrix : " << trace1 << endl;
+            int trace2 = ob2.matrix_trace();
+            cout << "\nThe Trace of the Second Matrix : " << trace2 << endl;
+            break;
+        }
+        case 5: {
+            cout << "Thank you";
+            exit (0);
+            break;
+        }
+    }
+  }
+  return 0;
 }
