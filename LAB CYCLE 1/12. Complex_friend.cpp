@@ -16,7 +16,7 @@ class comp{
         }
         friend comp sum(comp, comp);
         void display(){
-            cout<<"Sum= "<<real<<"+"<<imag<<"i"<<endl;
+            cout<<real<<"+"<<imag<<"i"<<endl;
         }
 };
 
@@ -30,17 +30,22 @@ comp sum(comp a, comp b){
 
 int main(){
     int real,imag;
-    cout<<"Enter 2 integers for the first complex number: ";
+    cout<<"Enter real and imaginary parts for the first complex number: ";
     cin>>real>>imag;
     comp A(real,imag);
+    cout<<"\nFirst complex number: ";
+    A.display();
 
-    cout<<"Enter 2 integers for the second complex number: ";
+    cout<<"Enter real and imaginary parts for the second complex number: ";
     cin>>real>>imag;
     comp B(real,imag);
+    cout<<"\nSecond complex number: ";
+    B.display();
     
     int a,b;
     comp C(a,b);
     C=sum(A,B);
+    cout<<"Sum of the 2 complex numbers = ";
     C.display();
 
     return 0;
