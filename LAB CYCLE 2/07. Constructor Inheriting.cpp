@@ -47,7 +47,15 @@ class gamma:public beta, public alpha{
 };
 
 int main(){
-	gamma g(1,2.3,4,5);
+    int a, c, d;
+    float b;
+    cout<<"Enter an integer for Alpha: ";
+    cin>>a;
+    cout<<"Enter a float for Beta: ";
+    cin>>b;
+    cout<<"Enter 2 integers for Gamma: ";
+    cin>>c>>d;
+	gamma g(a,b,c,d);
 	g.show_x();
 	g.show_y();
 	g.show_m_n();
