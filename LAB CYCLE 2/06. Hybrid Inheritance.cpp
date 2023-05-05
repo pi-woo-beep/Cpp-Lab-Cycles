@@ -4,68 +4,76 @@ inheritance including constructors with parameters.*/
 #include <iostream>
 using namespace std;
 
-class student{
-	protected:
-		int roll_no;
-	public:
-		void get_roll_no (int a){
-			cout<<"Enter roll number: ";
-			cin>>a;
-			roll_no=a;
-		}
-		void put_roll_no(){
-			cout<<"Roll number = "<<roll_no<<endl;
-		}
+class Student {
+  protected:
+    int roll_no;
+  public:
+    void in_rollno(int);
+  void rollno();
 };
-
-class test: public student{
-	protected:
-		float sub1, sub2;
-	public:
-		void get_marks (float a, float b){
-			cout<<"Enter 2 marks (out of 100): "<<endl;
-			cin>>a>>b;
-			sub1=a;
-			sub2=b;
-		}
-		void put_marks(){
-			cout<<"Subject 1   = "<<sub1<<endl;
-			cout<<"Subject 2   = "<<sub2<<endl;
-		}
+void Student::in_rollno(int r) {
+  roll_no = r;
+}
+void Student::rollno() {
+  cout << "Roll number: " << roll_no;
+  cout << endl;
+}
+class Test: virtual public Student {
+  protected:
+  float sub1;
+  float sub2;
+  float sub3;
+  public: void get_marks(float s1, float s2, float s3) {
+    sub1 = s1;
+    sub2 = s2;
+    sub3 = s3;
+  }
+  void marks() {
+    cout << "Marks in subject 1: " << sub1 << endl;
+    cout << "Marks in subject 2: " << sub2 << endl;
+    cout << "Marks in subject 3: " << sub3 << endl;
+  }
 };
-
-class sports{
-	protected:
-		float score;
-	public:
-		void get_score (float s){
-			cout<<"Enter score: ";
-			cin>>s;
-			score=s;
-		}
-		void put_score(){
-			cout<<"Score = "<<score<<endl;
-		}
+class Sports: virtual public Student {
+  protected: float score;
+  public: void get_score(float s) {
+    score = s;
+  }
+  void put_score() {
+    cout << "Marks in sports: " << score << endl;
+  }
 };
-
-class result:public test, public sports{
-	private:
-		float total;
-	public:
-		void display(){
-			float total = sub1 + sub2 + score;
-			put_roll_no();
-			put_marks();
-			cout<<"Total marks = "<<total<<endl;
-		}
+class Result: public Test, public Sports {
+  float total_marks;
+  public:
+    void display();
 };
-
-int main(){
-	result r;
-	int n;
-	float a,b;
-	r.get_roll_no(n);
-	r.get_marks(a,b);
-	r.get_score(a);
-	r.display();
+void Result::display() {
+  total_marks = sub1 + sub2 + sub3 + score;
+  rollno();
+  marks();
+  put_score();
+  cout << "Total marks (out of 400): " << total_marks;
+  cout << endl;
+}
+int main() {
+  int roll;
+  float m1, m2, m3, sc;
+    Result Stud;
+    cout << "\nEnter the roll number of the Student: ";
+    cin >> roll;
+    cout << "\nEnter marks obtained in subject 1 (out of 100): ";
+    cin >> m1;
+    cout << "\nEnter marks obtained in subject 2 (out of 100): ";
+    cin >> m2;
+    cout << "\nEnter marks obtained in subject 3 (out of 100): ";
+    cin >> m3;
+    cout << "\nEnter score obtained in sports (out of 100): ";
+    cin >> sc;
+    cout << endl;
+    Stud.in_rollno(roll);
+    Stud.get_marks(m1, m2, m3);
+    Stud.get_score(sc);
+    Stud.display();
+  return 0;
 }
