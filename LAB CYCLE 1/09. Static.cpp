@@ -3,29 +3,33 @@
 #include <iostream>
 using namespace std;
 
-class obj{
-    private:
-        int obj_no;
-        static int count;
-    public:
-        obj(){
-            obj_no=++count;
-        }
-        static void showcount(){
-            cout<<"Count: "<<count<<"\n";
-        }
+class object {
+  int a;
+  static int count;
+  public:
+    void setvalue() {
+      a=++count;
+    }
+  void display() {
+    cout << "object number:" << a << endl;
+  }
+  static void showcount() {
+    cout << "Count of objects found:" << count << endl;
+  }
 };
+int object::count;
+int main() {
+  int n;
+  cout << "Enter how many objects want to be created: ";
+  cin >> n;
+  object Obj[n];
+  for (int i = 0; i < n; i++) {
+    Obj[i].setvalue();
 
-int obj::count;
-int main(){
-    obj a, b;
-    obj::showcount();
-
-    obj c, d;
-    obj::showcount();
-
-    obj e;
-    obj::showcount();
-
-    return 0;
+  }
+  object::showcount();
+  for (int i = 0; i < n; i++) {
+    Obj[i].display();
+  }
+  return 0;
 }
