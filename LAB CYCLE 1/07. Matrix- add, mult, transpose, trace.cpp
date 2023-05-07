@@ -49,7 +49,7 @@ void Mat::matrix_transpose(Mat & x) {
 }
 void Mat::matrix_mult(Mat & x, Mat & y) {
   for (int i = 0; i < x.r; i++) {
-    for (int j = 0; j < y.r; j++) {
+    for (int j = 0; j < y.c; j++) {
       a[i][j] = 0;
       for (int k = 0; k < x.c; k++) {
         a[i][j] += x.a[i][k] * y.a[k][j];
